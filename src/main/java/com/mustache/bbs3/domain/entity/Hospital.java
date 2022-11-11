@@ -5,15 +5,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+
 @Getter
-@Setter
-@NoArgsConstructor
+@Entity
+@Table(name = "nation_wide_hospitals")
 public class Hospital {
-    private int id;
-    private String openServiceName;
+
+    @Id
+    // GeneratedValue 안쓴다.
+    private int id; // Long --> bigint
+
+    /*private String openServiceName;
     private int openLocalGovernmentCode;
     private String managementNumber;
     private LocalDateTime licenseDate;
@@ -27,5 +34,5 @@ public class Hospital {
     private int healthcareProviderCount;
     private int patientRoomCount;
     private int totalNumberOfBeds;
-    private float totalAreaSize;
+    private float totalAreaSize;*/
 }
