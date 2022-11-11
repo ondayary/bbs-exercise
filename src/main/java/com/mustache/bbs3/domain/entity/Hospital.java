@@ -3,22 +3,26 @@ package com.mustache.bbs3.domain.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 
-@Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "nation_wide_hospitals")
 public class Hospital {
 
     @Id
     // GeneratedValue 안쓴다.
-    private int id; // Long --> bigint
+    private Integer id; // Long --> bigint
+
+    @Column(name = "hospital_name")
+    private String hospitalName; // 병원 이름
+    private String roadNameAddress; // 도로명 주소
 
     /*private String openServiceName;
     private int openLocalGovernmentCode;
