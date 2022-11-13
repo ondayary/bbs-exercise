@@ -1,0 +1,14 @@
+{{>layouts/header}}
+
+    {{#hospitals}}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">No. {{id}}</h6>
+                <h5 class="card-title">{{hospitalName}}</h5>
+                <p class="card-text">{{roadNameAddress}}</p>
+            </div>
+        </div>
+    {{/hospitals}}
+
+{{>layouts/footer}}
+
