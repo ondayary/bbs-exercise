@@ -1,5 +1,6 @@
 package com.mustache.bbs3.controller;
 
+import com.mustache.bbs3.domain.entity.Article;
 import com.mustache.bbs3.domain.entity.Hospital;
 import com.mustache.bbs3.domain.repository.HospitalRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/hospitals")
@@ -31,12 +33,23 @@ public class HospitalController {
         return "redirect:/hospitals/list";
     }
 
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Integer id, Model model) {
+        Optional<Hospital> optHospital = hospitalRepository.findById(id);
+        if (!optHospital.isEmpty()) {
+            model.addAttribute("hospitals",optHospital.get());
+            return "hospitals/show";
+        } else {
+            return "hospitals/error";
+        }
+    }
+
     // 병원 전체 리스트 조회 페이지
     @GetMapping("/list")
     public String hospitalList(Pageable pageable, Model model) {
         log.info("hospitalList 호출");
 //        List<Hospital> hospitalList = hospitalRepository.findAll();
-        Page<Hospital hospitalList = hospitalRepository.findAll(pageable);
+        Page<Hospital> hospitalList = hospitalRepository.findAll(pageable);
 
         model.addAttribute("hospitals", hospitalList);
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
