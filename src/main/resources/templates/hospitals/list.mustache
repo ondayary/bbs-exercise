@@ -1,5 +1,6 @@
 {{>layouts/header}}
 
+<br>
 <h1>병원 정보 리스트</h1>
 <table class="table table-striped">
     <thead>
@@ -13,13 +14,14 @@
     {{#hospitals}}
         <tr>
             <th scope="row">{{id}}</th>
-            <td><a href="/hospitals/{{id}}">{{hospitalName}}</a></td>
+            <td><a href="/hospitals/{{id}}" style="text-decoration:none; color:black">{{hospitalName}}</a></td>
             <td>{{roadNameAddress}}</td>
         </tr>
     {{/hospitals}}
     </tbody>
-    <a href="/hospitals/list?page={{previous}}" class="card-link">이전 페이지</a>
-    <a href="/hospitals/list?page={{next}}" class="card-link">다음 페이지</a>
 </table>
-
+<div style="text-align:center;">
+        <a href="/hospitals/list?page={{previous}}">이전 페이지</a>
+        <a href="/hospitals/list?page={{next}}">다음 페이지</a>
+</div>
 {{>layouts/footer}}
