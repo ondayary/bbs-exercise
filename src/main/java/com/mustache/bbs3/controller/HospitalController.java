@@ -33,10 +33,17 @@ public class HospitalController {
 
     // 병원 전체 리스트 조회 페이지
     @GetMapping("/list")
-    public String hospitalList(Model model) {
+    public String hospitalList(Pageable pageable, Model model) {
         log.info("hospitalList 호출");
-        List<Hospital> hospitalList = hospitalRepository.findAll();
+//        List<Hospital> hospitalList = hospitalRepository.findAll();
+        Page<Hospital hospitalList = hospitalRepository.findAll(pageable);
+
         model.addAttribute("hospitals", hospitalList);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasPrevious", hospitalList.hasPrevious());
+        model.addAttribute("hasNext", hospitalList.hasNext());
+
         return "hospitals/list";
     }
 }
