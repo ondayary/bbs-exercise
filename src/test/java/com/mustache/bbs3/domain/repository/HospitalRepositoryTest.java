@@ -31,6 +31,34 @@ class HospitalRepositoryTest {
         }
     }
 
+    @Test
+    @DisplayName("Containing 사용")
+    void containing() {
+        List<Hospital> hospitals = hospitalRepository.findByRoadNameAddressContaining("송파구");
+        for (Hospital hospital : hospitals) {
+            System.out.printf("%s, %s\n", hospital.getHospitalName(), hospital.getBusinessTypeName());
+        }
+    }
+
+    @Test
+    @DisplayName("StartsWith 사용")
+    void startsWith() {
+        List<Hospital> hospitals = hospitalRepository.findByRoadNameAddressStartsWith("경기도");
+        for (Hospital hospital : hospitals) {
+            System.out.println(hospital.getRoadNameAddress());
+        }
+    }
+
+    @Test
+    @DisplayName("EndsWith 사용")
+    void endsWith() {
+        List<Hospital> hospitals = hospitalRepository.findByHospitalNameEndsWith("의원");
+        for (Hospital hospital : hospitals) {
+            System.out.println(hospital.getHospitalName());
+        }
+    }
+
+
     // 먼저 아이디 한개를 뽑아 테스트해보자.
     @Test
     void findById() {
