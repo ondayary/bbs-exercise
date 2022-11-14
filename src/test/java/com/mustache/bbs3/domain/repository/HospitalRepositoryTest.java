@@ -58,6 +58,14 @@ class HospitalRepositoryTest {
         }
     }
 
+    @Test
+    @DisplayName("Between 사용")
+    void between() {
+        List<Hospital> hospitals = hospitalRepository.findByPatientRoomCountBetween(10,20);
+        for (Hospital hospital : hospitals) {
+            System.out.printf("%s, %d\n",hospital.getHospitalName(), hospital.getPatientRoomCount());
+        }
+    }
 
     // 먼저 아이디 한개를 뽑아 테스트해보자.
     @Test
