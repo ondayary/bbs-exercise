@@ -22,6 +22,13 @@ public class Hospital {
 
     @Column(name = "hospital_name")
     private String hospitalName; // 병원 이름
+    private Integer patientRoomCount;
+    private Integer totalNumberOfBeds;
+    private String businessTypeName;
+    private Float totalAreaSize;
+
+
+    @Column(name = "road_name_address")
     private String roadNameAddress; // 도로명 주소
 
     /*private String openServiceName;
