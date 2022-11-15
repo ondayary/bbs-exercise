@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/hospitals")
-public class HospitalRestController {성
+public class HospitalRestController {
 
     private final HospitalRepository hospitalRepository;
 
