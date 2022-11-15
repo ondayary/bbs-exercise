@@ -1,8 +1,14 @@
 package com.mustache.bbs3.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HospitalResponse { // DTO
     private Integer id;
     private String roadNameAddress;
