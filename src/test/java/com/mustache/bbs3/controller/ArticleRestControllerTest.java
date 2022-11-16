@@ -12,9 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(ArticleRestControllerTest.class) // Controller를 테스트하게 해주는 기능
 class ArticleRestControllerTest {
@@ -27,11 +28,10 @@ class ArticleRestControllerTest {
 
     @Test
     @DisplayName("해당 id의 글이 조회가 잘 되는지")
-    void findSingle() {
+    void findSingle() throws Exception {
         Long id = 1l;
 
-        given(articleService.getArticleById(id))
-                .willReturn(new ArticleDto(1l, "첫번째 글", "첫번째 내용"));
+        given(articleService.getArticleById(id)).willReturn(new ArticleDto(1l, "첫번째 글", "첫번째 내용"));
 
         mockMvc.perform(get("/api/v1/articles/1"))
                 .andExpect(status().isOk())
