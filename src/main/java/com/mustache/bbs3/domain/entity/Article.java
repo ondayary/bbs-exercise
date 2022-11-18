@@ -2,11 +2,14 @@ package com.mustache.bbs3.domain.entity;
 
 import com.mustache.bbs3.domain.dto.ArticleDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
+@Builder
 @Entity
 @Getter
 @AllArgsConstructor
@@ -30,6 +33,5 @@ public class Article {
         this.content = content;
     }*/
 }
-
 
 
