@@ -1,5 +1,8 @@
 package com.mustache.bbs3.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mustache.bbs3.domain.dto.ArticleAddRequest;
+import com.mustache.bbs3.domain.dto.ArticleAddResponse;
 import com.mustache.bbs3.domain.dto.ArticleDto;
 import com.mustache.bbs3.service.ArticleService;
 import org.junit.jupiter.api.DisplayName;
@@ -7,18 +10,26 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ArticleRestControllerTest.class) // Controller를 테스트하게 해주는 기능
+@WebMvcTest(ArticleRestController.class) // Controller를 테스트하게 해주는 기능
 class ArticleRestControllerTest {
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     MockMvc mockMvc;
@@ -41,5 +52,28 @@ class ArticleRestControllerTest {
                 .andDo(print());
 
         verify(articleService).getArticleById(id);
+    }
+
+    @Test
+    @DisplayName("글 등록이 잘 되는지")
+    void add() throws Exception {
+        ArticleAddRequest dto = new ArticleAddRequest("제목입니다", "내용입니다.");
+
+        // articleService를 mockService를 해줘야 한다.
+        // any(): 어떤 request가 들어가도 선언해준 아이를 처리해주는 아이
+        given(articleService.add(any())).willReturn(new ArticleAddResponse(1l, dto.getTitle(), dto.getContent()));
+
+        mockMvc.perform(post("/api/v1/articles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.title").exists())
+                .andExpect(jsonPath("$.title").value("제목입니다."))
+                .andExpect(jsonPath("$.content").exists())
+                .andDo(print());
+
+        verify(articleService).add(dto);
     }
 }
